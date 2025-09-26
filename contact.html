@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - HidroGea</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 30% 50% 20%;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 1rem;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #ffd700;
+        }
+
+        .nav-item { position: relative; }
+        .dropdown-toggle { display: inline-flex; align-items: center; gap: 6px; }
+        .dropdown-menu { display:none; position:absolute; top:120%; left:0; background:#fff; color:#333; min-width:260px; border-radius:10px; box-shadow:0 10px 25px rgba(0,0,0,0.15); padding:0.5rem 0; z-index:9999; }
+        .dropdown-menu a { display:block; padding:0.6rem 1rem; color:#333; text-decoration:none; font-weight:500; white-space:nowrap; }
+        .dropdown-menu a:hover { background:#f2f6ff; color:#004499; }
+        .nav-item:hover .dropdown-menu { display:block; }
+
+        .lang-switch { display:flex; justify-content:flex-end; gap:0.5rem; }
+        .lang-btn { background: rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3); padding:0.35rem 0.75rem; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.95rem; }
+        .lang-btn.active, .lang-btn:hover { background:#ffd700; color:#333; border-color:#ffd700; }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect width="1200" height="600" fill="%230066cc"/><circle cx="300" cy="200" r="50" fill="%2300aaff" opacity="0.3"/><circle cx="900" cy="400" r="80" fill="%2300aaff" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+        }
+        .about {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #0066cc;
+        }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #0066cc;
+        }
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        .about-image {
+            background: linear-gradient(135deg, #0066cc, #00aaff);
+            height: 400px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .products {
+            padding: 5rem 0;
+            background: white;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        .product-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0066cc, #00aaff);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #0066cc;
+        }
+        .product-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .contact {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+        }
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .contact-info p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background: #ffd700;
+            color: #333;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+        .footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .footer p {
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">HidroGea</a>
+            </div>
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Početna</a></li>
+                    <li class="nav-item">
+                        <a href="services.html" class="dropdown-toggle">Usluge <span>▾</span></a>
+                        <div class="dropdown-menu">
+                            <a href="services.html#projektovanje">Projektovanje i Consulting</a>
+                            <a href="services.html#busenje">Bušenje bunara</a>
+                            <a href="services.html#opremanje">Opremanje bunara</a>
+                            <a href="services.html#geotermalna">Geotermalna energija i geotermalne sonde</a>
+                            <a href="services.html#nadzor">Nadzor</a>
+                        </div>
+                    </li>
+                    <li><a href="projekti.html">Projekti</a></li>
+                    <li><a href="about.html">O nama</a></li>
+                    <li><a href="contact.html">Kontakt</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="lang-switch">
+                    <button class="lang-btn" data-lang="sr">Srpski</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="contact" style="margin-top:80px;">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Kontaktirajte nas</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Informacije</h3>
+                    <p><strong>Adresa:</strong> Industrijska zona 15, Beograd</p>
+                    <p><strong>Telefon:</strong> +381 11 123 4567</p>
+                    <p><strong>Email:</strong> info@hidrogea.rs</p>
+                    <p><strong>Radno vreme:</strong> Pon-Pet: 8:00-17:00</p>
+                    <p><strong>Subota:</strong> 9:00-14:00</p>
+                    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=100070386308854" target="_blank" style="color: #0066cc; text-decoration: none;">HidroGea Facebook</a></p>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Ime i prezime</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Poruka</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Pošaljite poruku</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 HidroGea. Sva prava zadržana.</p>
+            <p>Kvalitetna voda za kvalitetan život</p>
+            <p>
+                <a href="https://www.facebook.com/profile.php?id=100070386308854" target="_blank" style="color: white; text-decoration: none; margin-right:12px;">📘 Facebook</a>
+                <a href="https://www.instagram.com" target="_blank" style="color: white; text-decoration: none; margin-right:12px;">📸 Instagram</a>
+                <a href="https://www.linkedin.com" target="_blank" style="color: white; text-decoration: none;">💼 LinkedIn</a>
+            </p>
+            <p>📞 +381 11 123 4567 • 📧 info@hidrogea.rs • 📍 Beograd</p>
+        </div>
+    </footer>
+    <script>
+        // Back to top button
+        (function(){
+            const btn = document.createElement('button');
+            btn.setAttribute('aria-label', 'Nazad na vrh');
+            btn.style.position = 'fixed';
+            btn.style.right = '18px';
+            btn.style.bottom = '18px';
+            btn.style.width = '46px';
+            btn.style.height = '46px';
+            btn.style.borderRadius = '50%';
+            btn.style.border = 'none';
+            btn.style.cursor = 'pointer';
+            btn.style.zIndex = '1100';
+            btn.style.background = 'linear-gradient(135deg, #ffd700, #ffb700)';
+            btn.style.boxShadow = '0 8px 22px rgba(0,0,0,0.18)';
+            btn.style.display = 'none';
+            btn.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease';
+            btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V6"/><path d="M6 12l6-6 6 6"/></svg>';
+            btn.addEventListener('mouseenter', () => { btn.style.transform = 'translateY(-2px)'; btn.style.boxShadow = '0 12px 26px rgba(0,0,0,0.22)'; });
+            btn.addEventListener('mouseleave', () => { btn.style.transform = 'translateY(0)'; btn.style.boxShadow = '0 8px 22px rgba(0,0,0,0.18)'; });
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            document.body.appendChild(btn);
+            window.addEventListener('scroll', () => {
+                btn.style.display = window.scrollY > 200 ? 'grid' : 'none';
+                btn.style.placeItems = 'center';
+                btn.style.opacity = window.scrollY > 200 ? '1' : '0';
+            });
+        })();
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            alert(`Hvala vam ${name}! Vaša poruka je uspešno poslata. Kontaktiraćemo vas u najkraćem mogućem roku.`);
+            this.reset();
+        });
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 102, 204, 0.95)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #0066cc, #004499)';
+            }
+        });
+        (function() {
+            const buttons = document.querySelectorAll('.lang-btn');
+            const saved = localStorage.getItem('site_lang') || 'sr';
+            function updateActive(lang) {
+                buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+                document.documentElement.setAttribute('lang', lang);
+            }
+            updateActive(saved);
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    localStorage.setItem('site_lang', lang);
+                    updateActive(lang);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
